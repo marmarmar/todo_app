@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>{{ config.SITE_NAME }}</title>
+
+    </head>
+    <body>
+        <h1>{{ config.SITE_NAME }}:</h1>
+        <ol>
+
+            {% for item in all_tasks %}
+            <li>task: {{item.name}}
+
+                <a href="{{  url_for('remove', todo_id=item.id)  }}">
+                    <img src="{{  url_for('static', filename='delete.png')  }}"></a>
+
+            </li>
+            {% endfor %}
+
+
+        </ol>
+        <p><a href="/new">Add new task</a></p>
+    </body>
+</html>
+
