@@ -2,21 +2,22 @@ from flask import Flask, render_template, request, redirect, url_for
 from models.todo import Todo
 import os
 
-
 app = Flask(__name__)
 
 app.config.update(dict(
     SECRET_KEY='sosecret',
-    DATABASE=os.path.join(app.root_path, 'db.sqlite'),
+    DATABASE=os.path.join(app.root_path, 'hello.db'),
     SITE_NAME='TO-DO App'
 ))
+
+Todo.create_database(os.path.join(app.root_path, 'hello.db'))
 
 
 @app.route("/")
 def list():
     """ Shows list of todo items stored in the database.
     """
-    all_tasks = Todo.get_all()
+    all_tasks = Todo.get_all(os.path.join(app.root_path, 'hello.db'))
     return render_template('index.html', all_tasks=all_tasks)
 
 
@@ -28,18 +29,18 @@ def add():
     """
     if request.method == 'POST':
         name = request.form['task']
-        task = Todo(0, name)
-        task.save()
+        task = Todo(None, name)
+        task.save(os.path.join(app.root_path, 'hello.db'))
         return list()
-    return render_template('new.html')
+    return render_template('add.html')
 
 
 @app.route("/remove/<todo_id>")
 def remove(todo_id):
     """ Removes todo item with selected id from the database """
 
-    task = Todo.get_by_id(todo_id)
-    task.delete()
+    task = Todo.get_by_id(todo_id, os.path.join(app.root_path, 'hello.db'))
+    task.delete(os.path.join(app.root_path, 'hello.db'))
     return list()
 
 
@@ -49,13 +50,26 @@ def edit(todo_id):
     If the method was GET it should show todo item form.
     If the method was POST it should update todo item in database.
     """
-    return "Edit " + todo_id
+    if request.method == 'POST':
+        old_task = Todo.get_by_id(todo_id, os.path.join(app.root_path, 'hello.db'))
+        name = request.form['name']
+        task = Todo(old_task.id, name)
+        task.update(os.path.join(app.root_path, 'hello.db'))
+        return list()
+    elif request.method == 'GET':
+        obj = Todo.get_by_id(todo_id, os.path.join(app.root_path, 'hello.db'))
+        old_name = obj.name
+        return render_template('update.html', old_name=old_name)
 
 
 @app.route("/toggle/<todo_id>")
 def toggle(todo_id):
     """ Toggles the state of todo item """
-    return "Toggle " + todo_id
+    task = Todo.get_by_id(todo_id, os.path.join(app.root_path, 'hello.db'))
+    task.toggle_object()
+    task.toggle(os.path.join(app.root_path, 'hello.db'))
+    return list()
 
 if __name__ == "__main__":
     app.run()
+

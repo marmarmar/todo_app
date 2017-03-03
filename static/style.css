@@ -1,0 +1,33 @@
+body {
+  font-family: "Avant Garde",Avantgarde,"Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+  background-color: red;
+}
+
+h1 {
+  text-align: center;
+}
+
+
+span.number {
+  font-weight:bold;
+  font-size: 12px;
+}
+
+div.content {
+  margin:auto;
+  width: 30%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+li {
+  list-style-type: none;
+  border-bottom: black 1px solid;
+  margin-top: 15px;
+}
+
+li.done span.todo-name {
+  text-decoration: line-through;
+}

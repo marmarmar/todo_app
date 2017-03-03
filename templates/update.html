@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='style.css') }}">
+        <title>Todo form</title>
+
+    </head>
+    <body>
+
+        <div class="content">
+
+            <br><h1>Edit your task here:</h1>
+            <div class="text-center">
+            <form action="" method="POST">
+                <br><p>My task:<input type="text" name="name" value="{{ old_name }}">
+                <button type="submit">Update</button></p>
+
+            </form><br>
+              <br><a href="/"><- Home -></a>
+            </div>
+
+        </div>
+
+    </body>
+</html>

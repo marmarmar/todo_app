@@ -1,25 +1,51 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='style.css') }}">
         <title>{{ config.SITE_NAME }}</title>
 
     </head>
     <body>
-        <h1>{{ config.SITE_NAME }}:</h1>
-        <ol>
+        <div class="content">
+            <br><h1>{{ config.SITE_NAME }}:</h1><br>
+            <ol>
 
-            {% for item in all_tasks %}
-            <li>task: {{item.name}}
+                {% for item in all_tasks %}
+                    {% if item.done == 0 %}
+                        <li>
+                            <a href="{{  url_for('toggle', todo_id=item.id)  }}">
+                            <img src="{{  url_for('static', filename='unchecked.png')  }}"></a>
+                            <span class="todo-name">{{ loop.index }}. {{item.name}}</span>
 
-                <a href="{{  url_for('remove', todo_id=item.id)  }}">
-                    <img src="{{  url_for('static', filename='delete.png')  }}"></a>
+                            <a href="{{  url_for('remove', todo_id=item.id)  }}">
+                                <img src="{{  url_for('static', filename='delete.png')  }}"></a>
+                            <a href="{{  url_for('edit', todo_id=item.id)  }}">
+                                <img src="{{  url_for('static', filename='edit.png')  }}"></a>
 
-            </li>
-            {% endfor %}
+                        </li>
+
+                    {% elif item.done == 1 %}
+                        <li class="done">
+                            <a href="{{  url_for('toggle', todo_id=item.id)  }}">
+                            <img src="{{  url_for('static', filename='checked.png')  }}"></a>
+                            <span class="todo-name">{{ loop.index }}. {{item.name}}</span>
+
+                            <a href="{{  url_for('remove', todo_id=item.id)  }}">
+                                <img src="{{  url_for('static', filename='delete.png')  }}"></a>
+                            <a href="{{  url_for('edit', todo_id=item.id)  }}">
+                                <img src="{{  url_for('static', filename='edit.png')  }}"></a>
+
+                        </li>
+
+                    {% endif %}
+                {% endfor %}
 
 
-        </ol>
-        <p><a href="/new">Add new task</a></p>
+            </ol>
+            <div class="text-center">
+                <br><br><a href="/new"><- Add new task -></a>
+            </div>
+        </div>
     </body>
 </html>
 

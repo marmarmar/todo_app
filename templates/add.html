@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+    <head>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='style.css') }}">
+        <title>{{ config.SITE_NAME }}</title>
+
+    </head>
+    <body>
+        <div class="content">
+
+            <br><h1>Write what you have to do:</h1>
+            <div class="text-center">
+            <form method="POST">
+
+                <br><p>My task: <input type="text" name="task"/>
+                <button type="submit">Add</button></p>
+            </form>
+
+              <br><br><a href="/"><- Home ></a>
+            </div>
+
+        </div>
+    </body>
+</html>
+
+
