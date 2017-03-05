@@ -4,30 +4,26 @@ import sqlite3
 class Todo:
     """ Class representing todo item."""
 
-    def __init__(self, id, name, done=0):
+    def __init__(self, id, name, done):
         self.id = id
         self.name = name
         self.done = done
 
-    def toggle_object(self):
-        """ Toggles item's state  """
-        if self.done == 0:
-            self.done = 1
-        else:
-            self.done = 0
-
     def toggle(self, database_path):
-        """ Toggles item's state in database """
         conn = sqlite3.connect(database_path)
         c = conn.cursor()
-        c.execute("UPDATE tasks SET finished='{}' WHERE id = '{}'".format(self.done, self.id))
+        if self.done == 0:
+            self.done = 1
+            c.execute("UPDATE tasks SET finished='{}' WHERE id = '{}'".format(self.done, self.id))
+        else:
+            self.done = 0
+            c.execute("UPDATE tasks SET finished='{}' WHERE id = '{}'".format(self.done, self.id))
         conn.commit()
         conn.close()
 
     @staticmethod
     def create_database(database_path):
-        # package_dir = os.path.abspath(os.path.dirname("/home/mar/Documents/python-flask-todo-marmarmar/models"))
-        # database_path = os.path.join(package_dir, 'hello.db')
+        """Creates database, drops one if exists."""
         conn = sqlite3.connect(database_path)
         c = conn.cursor()
         c.execute('''DROP TABLE IF EXISTS tasks;''')
@@ -92,15 +88,8 @@ class Todo:
         c = conn.cursor()
         cursor_object = c.execute('''SELECT * FROM tasks WHERE id = {};'''.format(id))
         tuple_in_list = cursor_object.fetchall()
-        task_by_id = Todo(tuple_in_list[0][0], tuple_in_list[0][1])
+        task_by_id = Todo(tuple_in_list[0][0], tuple_in_list[0][1], tuple_in_list[0][2])
         conn.close()
         return task_by_id
 
-#
-# def main():
-#     Todo.create_database(os.path.join(app.root_path, 'hello.db'))
-#     # print(Todo.get_all())
-#     # print(Todo.get_by_id(1).name)
-#
-#
-# main()
+

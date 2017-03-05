@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 from models.todo import Todo
 import os
+
 
 app = Flask(__name__)
 
@@ -10,7 +11,9 @@ app.config.update(dict(
     SITE_NAME='TO-DO App'
 ))
 
-Todo.create_database(os.path.join(app.root_path, 'hello.db'))
+
+def create_database():
+    Todo.create_database(os.path.join(app.root_path, 'hello.db'))
 
 
 @app.route("/")
@@ -21,7 +24,7 @@ def list():
     return render_template('index.html', all_tasks=all_tasks)
 
 
-@app.route('/new', methods=['GET', 'POST'])
+@app.route('/add', methods=['GET', 'POST'])
 def add():
     """ Creates new todo item
     If the method was GET it should show new item form.
@@ -29,8 +32,9 @@ def add():
     """
     if request.method == 'POST':
         name = request.form['task']
-        task = Todo(None, name)
-        task.save(os.path.join(app.root_path, 'hello.db'))
+        if len(name) > 0:
+            task = Todo(None, name, 0)
+            task.save(os.path.join(app.root_path, 'hello.db'))
         return list()
     return render_template('add.html')
 
@@ -53,7 +57,7 @@ def edit(todo_id):
     if request.method == 'POST':
         old_task = Todo.get_by_id(todo_id, os.path.join(app.root_path, 'hello.db'))
         name = request.form['name']
-        task = Todo(old_task.id, name)
+        task = Todo(old_task.id, name, old_task.done)
         task.update(os.path.join(app.root_path, 'hello.db'))
         return list()
     elif request.method == 'GET':
@@ -66,9 +70,14 @@ def edit(todo_id):
 def toggle(todo_id):
     """ Toggles the state of todo item """
     task = Todo.get_by_id(todo_id, os.path.join(app.root_path, 'hello.db'))
-    task.toggle_object()
     task.toggle(os.path.join(app.root_path, 'hello.db'))
     return list()
+
+
+def main():
+    create_database()
+
+main()
 
 if __name__ == "__main__":
     app.run()

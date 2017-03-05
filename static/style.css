@@ -8,11 +8,6 @@ h1 {
 }
 
 
-span.number {
-  font-weight:bold;
-  font-size: 12px;
-}
-
 div.content {
   margin:auto;
   width: 30%;
@@ -23,6 +18,7 @@ div.content {
 }
 
 li {
+  text-decoration: none;
   list-style-type: none;
   border-bottom: black 1px solid;
   margin-top: 15px;

@@ -24,7 +24,7 @@
 
                         </li>
 
-                    {% elif item.done == 1 %}
+                    {% else %}
                         <li class="done">
                             <a href="{{  url_for('toggle', todo_id=item.id)  }}">
                             <img src="{{  url_for('static', filename='checked.png')  }}"></a>
@@ -43,7 +43,7 @@
 
             </ol>
             <div class="text-center">
-                <br><br><a href="/new"><- Add new task -></a>
+                <br><br><a href="/add"><- Add new task -></a>
             </div>
         </div>
     </body>
