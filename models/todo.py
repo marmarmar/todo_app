@@ -26,12 +26,10 @@ class Todo:
         """Creates database, drops one if exists."""
         conn = sqlite3.connect(database_path)
         c = conn.cursor()
-        c.execute('''DROP TABLE IF EXISTS tasks;''')
-        c.execute('''CREATE TABLE tasks
+        c.execute('''CREATE TABLE IF NOT EXISTS tasks
                      (id integer primary key autoincrement,
                      task text not null,
                      finished integer);''')
-        c.execute('''INSERT INTO tasks(id, task, finished) VALUES (null, "read", 0);''')
         conn.commit()
         conn.close()
 

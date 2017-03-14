@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from models.todo import Todo
 import os
 
@@ -11,16 +11,18 @@ app.config.update(dict(
     SITE_NAME='TO-DO App'
 ))
 
+DATABASE_PATH = os.path.join(app.root_path, 'hello.db')
+
 
 def create_database():
-    Todo.create_database(os.path.join(app.root_path, 'hello.db'))
+    Todo.create_database(DATABASE_PATH)
 
 
 @app.route("/")
 def list():
     """ Shows list of todo items stored in the database.
     """
-    all_tasks = Todo.get_all(os.path.join(app.root_path, 'hello.db'))
+    all_tasks = Todo.get_all(DATABASE_PATH)
     return render_template('index.html', all_tasks=all_tasks)
 
 
@@ -32,20 +34,18 @@ def add():
     """
     if request.method == 'POST':
         name = request.form['task']
-        if len(name) > 0:
-            task = Todo(None, name, 0)
-            task.save(os.path.join(app.root_path, 'hello.db'))
-        return list()
-    return render_template('add.html')
+        task = Todo(None, name, 0)
+        task.save(DATABASE_PATH)
+        return redirect("/")
+    return render_template("add.html")
 
 
 @app.route("/remove/<todo_id>")
 def remove(todo_id):
     """ Removes todo item with selected id from the database """
-
-    task = Todo.get_by_id(todo_id, os.path.join(app.root_path, 'hello.db'))
+    task = Todo.get_by_id(todo_id, DATABASE_PATH)
     task.delete(os.path.join(app.root_path, 'hello.db'))
-    return list()
+    return redirect("/")
 
 
 @app.route("/edit/<todo_id>", methods=['GET', 'POST'])
@@ -55,13 +55,13 @@ def edit(todo_id):
     If the method was POST it should update todo item in database.
     """
     if request.method == 'POST':
-        old_task = Todo.get_by_id(todo_id, os.path.join(app.root_path, 'hello.db'))
+        old_task = Todo.get_by_id(todo_id, DATABASE_PATH)
         name = request.form['name']
         task = Todo(old_task.id, name, old_task.done)
         task.update(os.path.join(app.root_path, 'hello.db'))
-        return list()
+        return redirect("/")
     elif request.method == 'GET':
-        obj = Todo.get_by_id(todo_id, os.path.join(app.root_path, 'hello.db'))
+        obj = Todo.get_by_id(todo_id, DATABASE_PATH)
         old_name = obj.name
         return render_template('update.html', old_name=old_name)
 
@@ -69,16 +69,12 @@ def edit(todo_id):
 @app.route("/toggle/<todo_id>")
 def toggle(todo_id):
     """ Toggles the state of todo item """
-    task = Todo.get_by_id(todo_id, os.path.join(app.root_path, 'hello.db'))
+    task = Todo.get_by_id(todo_id, DATABASE_PATH)
     task.toggle(os.path.join(app.root_path, 'hello.db'))
-    return list()
+    return redirect("/")
 
-
-def main():
-    create_database()
-
-main()
 
 if __name__ == "__main__":
+    create_database()
     app.run()
 
