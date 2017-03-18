@@ -1,29 +1,32 @@
 body {
-  font-family: "Avant Garde",Avantgarde,"Century Gothic",CenturyGothic,AppleGothic,sans-serif;
-  background-color: red;
+    font-family: "Avant Garde",Avantgarde,"Century Gothic",CenturyGothic,AppleGothic,sans-serif;
+    background-color: red;
 }
 
 h1 {
-  text-align: center;
+    text-align: center;
 }
 
+div.add {
+    display: initial;
+}
 
 div.content {
-  margin:auto;
-  width: 30%;
+    margin:auto;
+    width: 30%;
 }
 
 .text-center {
-  text-align: center;
+    text-align: center;
 }
 
 li {
-  text-decoration: none;
-  list-style-type: none;
-  border-bottom: black 1px solid;
-  margin-top: 15px;
+    text-decoration: none;
+    list-style-type: none;
+    border-bottom: black 1px solid;
+    margin-top: 15px;
 }
 
 li.done span.todo-name {
-  text-decoration: line-through;
+    text-decoration: line-through;
 }

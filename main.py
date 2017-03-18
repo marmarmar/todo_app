@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 from models.todo import Todo
 import os
 
@@ -25,19 +25,36 @@ def list():
     all_tasks = Todo.get_all(DATABASE_PATH)
     return render_template('index.html', all_tasks=all_tasks)
 
+# -------------------------------------------
+
 
 @app.route('/add', methods=['GET', 'POST'])
 def add():
-    """ Creates new todo item
-    If the method was GET it should show new item form.
-    If the method was POST it should create and save new todo item.
-    """
-    if request.method == 'POST':
-        name = request.form['task']
-        task = Todo(None, name, 0)
-        task.save(DATABASE_PATH)
-        return redirect("/")
     return render_template("add.html")
+
+
+@app.route('/echo/', methods=['GET'])
+def echo():
+    ret_data = {"value": request.args.get('echoValue')}
+    return jsonify(ret_data)
+
+
+
+# ----------------------------------------------
+
+
+# @app.route('/add', methods=['GET', 'POST'])
+# def add():
+#     """ Creates new todo item
+#     If the method was GET it should show new item form.
+#     If the method was POST it should create and save new todo item.
+#     """
+#     if request.method == 'POST':
+#         name = request.form['task']
+#         task = Todo(None, name, 0)
+#         task.save(DATABASE_PATH)
+#         return redirect("/")
+#     return render_template("add.html")
 
 
 @app.route("/remove/<todo_id>")
@@ -76,5 +93,5 @@ def toggle(todo_id):
 
 if __name__ == "__main__":
     create_database()
-    app.run()
+    app.run(debug=True)
 

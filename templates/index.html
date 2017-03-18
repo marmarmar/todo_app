@@ -3,11 +3,15 @@
     <head>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='style.css') }}">
         <title>{{ config.SITE_NAME }}</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="static/todo.js"></script>
 
     </head>
     <body>
+
         <div class="content">
-            <br><h1>{{ config.SITE_NAME }}:</h1><br>
+            <br><h1>{{ config.SITE_NAME }}</h1><br>
+
             <ol>
 
                 {% for item in all_tasks %}
@@ -46,6 +50,7 @@
                 <br><br><a href="/add"><- Add new task -></a>
             </div>
         </div>
+
     </body>
 </html>
 
