@@ -9,17 +9,20 @@ class Todo:
         self.name = name
         self.done = done
 
-    def toggle(self, database_path):
-        conn = sqlite3.connect(database_path)
-        c = conn.cursor()
-        if self.done == 0:
-            self.done = 1
-            c.execute("UPDATE tasks SET finished='{}' WHERE id = '{}'".format(self.done, self.id))
-        else:
-            self.done = 0
-            c.execute("UPDATE tasks SET finished='{}' WHERE id = '{}'".format(self.done, self.id))
-        conn.commit()
-        conn.close()
+# ALL COMMENTED CODE IS STILL HERE BECAUSE I NEED IT FOR FUTURE DEVELOPMENT
+# THE APP IS NOT FINISHED
+
+    # def toggle(self, database_path):
+    #     conn = sqlite3.connect(database_path)
+    #     c = conn.cursor()
+    #     if self.done == 0:
+    #         self.done = 1
+    #         c.execute("UPDATE tasks SET finished='{}' WHERE id = '{}'".format(self.done, self.id))
+    #     else:
+    #         self.done = 0
+    #         c.execute("UPDATE tasks SET finished='{}' WHERE id = '{}'".format(self.done, self.id))
+    #     conn.commit()
+    #     conn.close()
 
     @staticmethod
     def create_database(database_path):
@@ -49,13 +52,13 @@ class Todo:
         conn.commit()
         conn.close()
 
-    def delete(self, database_path):
-        """ Removes todo item from the database """
-        conn = sqlite3.connect(database_path)
-        c = conn.cursor()
-        c.execute('''DELETE FROM tasks WHERE id = {};'''.format(self.id))
-        conn.commit()
-        conn.close()
+    # def delete(self, database_path):
+    #     """ Removes todo item from the database """
+    #     conn = sqlite3.connect(database_path)
+    #     c = conn.cursor()
+    #     c.execute('''DELETE FROM tasks WHERE id = {};'''.format(self.id))
+    #     conn.commit()
+    #     conn.close()
 
     @classmethod
     def get_all(cls, database_path):
@@ -73,21 +76,21 @@ class Todo:
         conn.close()
         return list_tasks
 
-    @classmethod
-    def get_by_id(cls, id, database_path):
-        """ Retrieves todo item with given id from database.
-        Args:
-            id(int): item id
-            database_path: os.path.join(app.root_path, 'hello.db')
-        Returns:
-            Todo: Todo object with a given id
-        """
-        conn = sqlite3.connect(database_path)
-        c = conn.cursor()
-        cursor_object = c.execute('''SELECT * FROM tasks WHERE id = {};'''.format(id))
-        tuple_in_list = cursor_object.fetchall()
-        task_by_id = Todo(tuple_in_list[0][0], tuple_in_list[0][1], tuple_in_list[0][2])
-        conn.close()
-        return task_by_id
+    # @classmethod
+    # def get_by_id(cls, id, database_path):
+    #     """ Retrieves todo item with given id from database.
+    #     Args:
+    #         id(int): item id
+    #         database_path: os.path.join(app.root_path, 'hello.db')
+    #     Returns:
+    #         Todo: Todo object with a given id
+    #     """
+    #     conn = sqlite3.connect(database_path)
+    #     c = conn.cursor()
+    #     cursor_object = c.execute('''SELECT * FROM tasks WHERE id = {};'''.format(id))
+    #     tuple_in_list = cursor_object.fetchall()
+    #     task_by_id = Todo(tuple_in_list[0][0], tuple_in_list[0][1], tuple_in_list[0][2])
+    #     conn.close()
+    #     return task_by_id
 
 

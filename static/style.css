@@ -1,20 +1,48 @@
 body {
     font-family: "Avant Garde",Avantgarde,"Century Gothic",CenturyGothic,AppleGothic,sans-serif;
     background-color: red;
+    color: black;
 }
 
 h1 {
     text-align: center;
 }
 
+.invisible {
+    display: none;
+}
+
+.visible {
+    display: initial;
+}
+
+
+button:hover {
+    color: white;
+    background-color:black;
+}
+
+
+#invisible {
+    display: none;
+}
+
+#visible {
+    display: initial;
+}
+
+#button {
+    display: initial;
+}
+
+#button_gone {
+    display: none;
+}
+
 div.add {
     display: initial;
 }
 
-div.content {
-    margin:auto;
-    width: 30%;
-}
 
 .text-center {
     text-align: center;
@@ -23,7 +51,6 @@ div.content {
 li {
     text-decoration: none;
     list-style-type: none;
-    border-bottom: black 1px solid;
     margin-top: 15px;
 }
 

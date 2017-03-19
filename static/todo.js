@@ -1,3 +1,6 @@
+// this is here because I wanted it to work but it wouldn't, maybe in the future I will make it work
+
+
 $(document).ready(function() {
             $("#add").focus();
             $("#add").keypress(function(event) {

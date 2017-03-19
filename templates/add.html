@@ -4,27 +4,51 @@
 
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename ='style.css') }}">
         <title>{{ config.SITE_NAME }}</title>
-        <script type="text/javascript" src="static/jquery.js"></script>
-        <script type=text/javascript>
-          var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-        </script>
-        <script type="text/javascript" src="static/json.js"></script>
+
+
 
     </head>
     <body>
+        <div class="text-center">
+            <h1>To Do Application</h1>
+            <p> # powered by AJAX</p><br>
 
+            <button id="button">Add new task</button><br><br>
 
-        <div class="content">
-
-            <div class="text-center">
+            <div id="invisible">
                 <strong>Enter a task:</strong>
-                <input type='text' size='10' id='echoText' name='echoText'>
+                <input type='text' size='20' id='echoText' name='echoText'/>
                 <button type='button' id='submitBtn' name='submitBtn'>Submit via AJAX</button><br /><br />
-                <strong><div id='echoResult'></div></strong>
+            </div><br>
 
+            <strong><u>Things to do:</u></strong><br>
+            <div id="checklist">
+                {% for item in all_tasks %}
+                    <div>
+                        <li>{{item.name}}</li>
+
+                        <span class="invisible" ><br>
+                            <input value="{{ item.name }}" id='updateText' name='updateText'/>
+                            <button id="updateBtn" name='updateBtn'>Update</button>
+                        </span>
+                    </div>
+                {% endfor %}
+                <div id='echoResult'></div><br>
             </div>
+            <br>
+            <button id="yellowFont">Yellow Font</button>
+            <button id="blackFont">Black Font</button>
+            <button id="whiteFont">White Font</button><br>
+            <button id="redBg">Red Background</button>
+            <button id="greenBg">Green Background</button>
+            <button id="blueBg">Blue Background</button>
 
         </div>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type=text/javascript>
+      var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+    <script type="text/javascript" src="static/json.js"></script>
     </body>
 </html>
 
