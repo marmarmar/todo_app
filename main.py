@@ -56,8 +56,9 @@ def echo():
 @app.route('/echoup/', methods=['GET'])
 def echoup():
     ret_data = {"value": request.args.get('echoUp')}
+    id = request.args.get("input_id")
     name = request.args.get('echoUp')
-    task = Todo(None, name, 0)
+    task = Todo(id, name, 0)
     task.update(DATABASE_PATH)
     return jsonify(ret_data)
 

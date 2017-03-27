@@ -30,10 +30,11 @@
                         <span class="invisible" ><br>
                             <input value="{{ item.name }}" id='updateText' name='updateText'/>
                             <button id="updateBtn" name='updateBtn'>Update</button>
+                            <input type='hidden' class="task_id" value="{{ item.id }}" />
                         </span>
                     </div>
                 {% endfor %}
-                <div id='echoResult'></div><br>
+                <!--<div id='echoResult'></div><br>-->
             </div>
             <br>
             <button id="yellowFont">Yellow Font</button>

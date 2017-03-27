@@ -11,14 +11,29 @@ $(function() {
             data: { echoValue: $('input[name="echoText"]').val() },
             success: function(data) {
 
-                $('#echoResult').append('<li>');
-                $('#echoResult').append(data.value);
-                $('#echoResult').append('</li>');
-                $('#echoResult').append('<span class="invisible"><input  /><button id="update">Update</button></span>');
+                $('#checklist').append('<div><li>' + data.value + '</li><span class="invisible"><input  /><button id="update">Update</button></span></div>');
+
 
             }
         });
     });
+    $(document).on("click", "#updateBtn", (function() {
+        $(".visible").attr("class", "invisible");
+        $.ajax({
+            type: "GET",
+            url: $SCRIPT_ROOT + "/echoup/",
+            contentType: "application/json; charset=utf-8",
+            data: { echoUp: $('input[name="updateText"]').val(), input_id: $(this).parent().find(".task_id").val() },
+            success: function(data) {
+
+
+                $('#echoResult').append('<li>');
+                $('#echoResult').append(data.value);
+                $('#echoResult').append('</li>');
+
+            }
+        });
+    }));
 });
 
 
@@ -77,22 +92,5 @@ function editItem() {
 
 }
 
-$(document).on("click", "#updateBtn", (function() {
-     $(".visible").attr("class", "invisible");
-     $.ajax({
-        type: "GET",
-        url: $SCRIPT_ROOT + "/echoup/",
-        contentType: "application/json; charset=utf-8",
-        data: { echoUp: $('input[name="updateText"]').val() },
-        success: function(data) {
-
-
-                $('#echoResult').append('<li>');
-                $('#echoResult').append(data.value);
-                $('#echoResult').append('</li>');
-
-        }
-     });
-}));
 
 
